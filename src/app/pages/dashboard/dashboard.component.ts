@@ -6,10 +6,12 @@ import { BaseChartDirective } from 'ng2-charts';
 import { TabelaRegistrosComponent } from '../../components/tabela-registros/tabela-registros.component';
 import { FormularioRegistroComponent } from '../../components/formulario-registro/formulario-registro.component';
 import { FormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormularioRegistroComponent, FormsModule],
+  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormularioRegistroComponent, FormsModule, CurrencyPipe, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -21,6 +23,7 @@ export class DashboardComponent {
   registrosFiltrados: any[] = [];
   mesSelecionado = '';
   categoriaSelecionada = '';
+  categorias: string[] = [];
 
   registros = [
     {
@@ -54,9 +57,15 @@ export class DashboardComponent {
   graficoBarra!: ChartConfiguration<'bar'>['data'];
 
   constructor(private financeiroService: FinanceiroService) {
-    this.registros = this.financeiroService.obterRegistros();
+
+    this.registros =
+      this.financeiroService.obterRegistros();
+
+    this.categorias =
+      this.financeiroService.obterCategorias();
 
     this.atualizarDashboard();
+
   }
   atualizarDashboard(): void {
 
@@ -111,18 +120,24 @@ export class DashboardComponent {
   }
   aplicarFiltros(): void {
 
-  this.registrosFiltrados = this.registros.filter(registro => {
+    this.registrosFiltrados = this.registros.filter(registro => {
 
-    const atendeMes =
-      this.mesSelecionado === '' ||
-      registro.data.startsWith(this.mesSelecionado);
+      const atendeMes =
+        this.mesSelecionado === '' ||
+        registro.data.startsWith(this.mesSelecionado);
 
-    const atendeCategoria =
-      this.categoriaSelecionada === '' ||
-      registro.categoria === this.categoriaSelecionada;
+      const atendeCategoria =
+        this.categoriaSelecionada === '' ||
+        registro.categoria === this.categoriaSelecionada;
 
-    return atendeMes && atendeCategoria;
-  });
+      return atendeMes && atendeCategoria;
+    });
 
-}
+  }
+  limparFiltros(): void {
+    this.mesSelecionado = '';
+    this.categoriaSelecionada = '';
+    this.aplicarFiltros();
+  }
+
 }

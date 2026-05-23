@@ -1,53 +1,81 @@
-
 <h2 class="page-title">Metas Financeiras</h2>
 
 <section class="meta-card">
 
-  <label for="perfil">Escolha seu perfil financeiro</label>
+    <label for="perfil">Escolha seu perfil financeiro</label>
 
-  <select
-    id="perfil"
-    name="perfil"
-    [(ngModel)]="perfilSelecionado"
-    (change)="calcularMetas()">
+    <select id="perfil" name="perfil" [(ngModel)]="perfilSelecionado" (change)="calcularMetas()">
 
-    <option value="conservador">Conservador - até 50% das entradas</option>
-    <option value="moderado">Moderado - até 70% das entradas</option>
-    <option value="arrojado">Arrojado - até 85% das entradas</option>
+        <option value="conservador">
+            Conservador - até 50% das entradas
+        </option>
 
-  </select>
+        <option value="moderado">
+            Moderado - até 70% das entradas
+        </option>
+
+        <option value="arrojado">
+            Arrojado - até 85% das entradas
+        </option>
+
+    </select>
 
 </section>
 
 <section class="cards-resumo">
 
-  <div class="card">
-    <h3>Total de Entradas</h3>
-    <p>R$ {{ entradas }}</p>
-  </div>
+    <div class="card">
+        <h3>Total de Entradas</h3>
 
-  <div class="card">
-    <h3>Total de Saídas</h3>
-    <p>R$ {{ saidas }}</p>
-  </div>
+        <p>
+            {{ entradas | currency:'BRL' }}
+        </p>
+    </div>
 
-  <div class="card">
-    <h3>Teto de Gastos</h3>
-    <p>R$ {{ tetoGastos }}</p>
-  </div>
+    <div class="card">
+        <h3>Total de Saídas</h3>
+
+        <p>
+            {{ saidas | currency:'BRL' }}
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Teto de Gastos</h3>
+
+        <p>
+            {{ tetoGastos | currency:'BRL' }}
+        </p>
+    </div>
 
 </section>
 
 <section class="meta-card">
 
-  <h3>Resultado da Meta</h3>
+    <h3>Resultado da Meta</h3>
 
-  <p><strong>Saldo da meta:</strong> R$ {{ saldoMeta }}</p>
+    <p>
+        <strong>Saldo da meta:</strong>
 
-  <p><strong>Dias restantes no mês:</strong> {{ diasRestantes }}</p>
+        {{ saldoMeta | currency:'BRL' }}
+    </p>
 
-  <p><strong>Margem de gasto diário:</strong> R$ {{ gastoDiario }}</p>
+    <p>
+        <strong>Dias restantes no mês:</strong>
 
-  <p><strong>Status:</strong> {{ mensagemStatus }}</p>
+        {{ diasRestantes }}
+    </p>
+
+    <p>
+        <strong>Margem de gasto diário:</strong>
+
+        {{ gastoDiario | currency:'BRL' }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+
+        {{ mensagemStatus }}
+    </p>
 
 </section>

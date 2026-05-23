@@ -24,8 +24,8 @@
             <td>{{ registro.descricao }}</td>
             <td>{{ registro.tipo }}</td>
             <td>{{ registro.categoria }}</td>
-            <td>{{ registro.data }}</td>
-            <td>R$ {{ registro.valor }}</td>
+            <td>{{ registro.data | date:'dd/MM/yyyy' }}</td>
+            <td>{{ registro.valor | currency:'BRL' }}</td>
 
             <td *ngIf="mostrarAcoes">
 

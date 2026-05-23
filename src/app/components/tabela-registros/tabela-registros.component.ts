@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CurrencyPipe } from '@angular/common'; 
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tabela-registros',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe, DatePipe],
   templateUrl: './tabela-registros.component.html',
   styleUrl: './tabela-registros.component.css'
 })
 export class TabelaRegistrosComponent {
-  
+
 @Input() registros: any[] = [];
 @Input() mostrarAcoes = false;
 

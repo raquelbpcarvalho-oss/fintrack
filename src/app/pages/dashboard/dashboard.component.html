@@ -5,21 +5,21 @@
     <mat-card class="card entrada">
         <mat-card-title>Total de Entradas</mat-card-title>
         <mat-card-content>
-            <p>R$ {{ totalEntradas }}</p>
+            <p>{{ totalEntradas | currency:'BRL' }}</p>
         </mat-card-content>
     </mat-card>
 
     <mat-card class="card saida">
         <mat-card-title>Total de Saídas</mat-card-title>
         <mat-card-content>
-            <p>R$ {{ totalSaidas }}</p>
+            <p>{{ totalSaidas | currency:'BRL' }}</p>
         </mat-card-content>
     </mat-card>
 
     <mat-card class="card saldo">
         <mat-card-title>Saldo Atual</mat-card-title>
         <mat-card-content>
-            <p>R$ {{ saldoAtual }}</p>
+            <p>{{ saldoAtual | currency:'BRL' }}</p>
         </mat-card-content>
     </mat-card>
 
@@ -38,22 +38,26 @@
         <select id="categoriaFiltro" name="categoriaFiltro" [(ngModel)]="categoriaSelecionada"
             (change)="aplicarFiltros()">
 
+            <!--Aqui troquei a lista de categorias pelo service-->
             <option value="">Todas as categorias</option>
 
-            <option value="Salário">Salário</option>
-            <option value="Casa">Casa</option>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Saúde">Saúde</option>
-            <option value="Educação">Educação</option>
-            <option value="Investimentos">Investimentos</option>
+            <option *ngFor="let categoria of categorias" [value]="categoria">
+
+                {{ categoria }}
+
+            </option>
 
         </select>
     </div>
+    <div>
+        <button type="button" (click)="limparFiltros()">
+            Limpar filtros
+        </button>
+    </div>
 
 </div>
-<app-tabela-registros [registros]="registrosFiltrados">  <!--Aqui eu so tenho a leitura da tabela, somente reutilizo o com-->
+<app-tabela-registros [registros]="registrosFiltrados">
+    <!--Aqui eu so tenho a leitura da tabela, somente reutilizo o com-->
 </app-tabela-registros>
 
 <div class="grafico-container">

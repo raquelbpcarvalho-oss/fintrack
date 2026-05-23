@@ -61,4 +61,16 @@ export class FinanceiroService {
 
     return saldoMeta / diasRestantes;
   }
+  obterCategorias(): string[] {
+  return [
+    'Salário',
+    'Casa',
+    'Alimentação',
+    'Transporte',
+    'Lazer',
+    'Saúde',
+    'Educação',
+    'Investimentos'
+  ];
+}
 }
