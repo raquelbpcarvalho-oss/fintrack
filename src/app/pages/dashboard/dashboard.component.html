@@ -1,1 +1,61 @@
-<p>dashboard works!</p>
+<h2 class="page-title">Dashboard Financeiro</h2>
+
+<section class="cards-resumo">
+
+    <mat-card class="card entrada">
+        <mat-card-title>Total de Entradas</mat-card-title>
+        <mat-card-content>
+            <p>R$ {{ totalEntradas }}</p>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card saida">
+        <mat-card-title>Total de Saídas</mat-card-title>
+        <mat-card-content>
+            <p>R$ {{ totalSaidas }}</p>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card saldo">
+        <mat-card-title>Saldo Atual</mat-card-title>
+        <mat-card-content>
+            <p>R$ {{ saldoAtual }}</p>
+        </mat-card-content>
+    </mat-card>
+
+</section>
+
+<div class="filtros">
+    <div>
+        <label for="mes">Filtrar por mês</label>
+
+        <input id="mes" name="mes" type="month" [(ngModel)]="mesSelecionado" (change)="aplicarFiltros()">
+    </div>
+
+    <div>
+        <label for="categoriaFiltro">Filtrar por categoria</label>
+
+        <select id="categoriaFiltro" name="categoriaFiltro" [(ngModel)]="categoriaSelecionada"
+            (change)="aplicarFiltros()">
+
+            <option value="">Todas as categorias</option>
+
+            <option value="Salário">Salário</option>
+            <option value="Casa">Casa</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Educação">Educação</option>
+            <option value="Investimentos">Investimentos</option>
+
+        </select>
+    </div>
+
+</div>
+<app-tabela-registros [registros]="registrosFiltrados">  <!--Aqui eu so tenho a leitura da tabela, somente reutilizo o com-->
+</app-tabela-registros>
+
+<div class="grafico-container">
+    <canvas baseChart [data]="graficoBarra" [type]="'bar'"></canvas>
+</div>

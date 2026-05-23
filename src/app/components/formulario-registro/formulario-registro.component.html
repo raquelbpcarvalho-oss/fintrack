@@ -1,1 +1,40 @@
-<p>formulario-registro works!</p>
+<h2>Novo Registro</h2>
+
+<form class="formulario" (ngSubmit)="adicionarRegistro()">
+
+    <label for="descricao">Descrição</label>
+
+    <input id="descricao" type="text" placeholder="Descrição" name="descricao" [(ngModel)]="descricao" required>
+
+    <label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo" [(ngModel)]="tipo" required>
+        <option value="Entrada">Entrada</option>
+        <option value="Saída">Saída</option>
+        <option value="Investimento">Investimento</option>
+    </select>
+    <label for="categoria">Categoria</label>
+
+    <select id="categoria" name="categoria" [(ngModel)]="categoria" required>
+
+        <option value="">Selecione</option>
+
+        <option value="Salário">Salário</option>
+        <option value="Casa">Casa</option>
+        <option value="Alimentação">Alimentação</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Saúde">Saúde</option>
+        <option value="Educação">Educação</option>
+        <option value="Investimentos">Investimentos</option>
+
+    </select>
+
+    <label for="data">Data</label>
+    <input id="data" type="date" name="data" [(ngModel)]="data" required>
+
+    <label for="valor">Valor</label>
+    <input id="valor" type="number" placeholder="Valor" name="valor" [(ngModel)]="valor" required>
+
+    <button type="submit">Adicionar</button>
+
+</form>

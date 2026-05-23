@@ -1,1 +1,8 @@
-<p>lancamentos works!</p>
+<h2 class="page-title">Lançamentos</h2>
+
+<app-formulario-registro (adicionar)="adicionarRegistro($event)">
+</app-formulario-registro>
+
+<app-tabela-registros [registros]="registros" [mostrarAcoes]="true" (remover)="removerRegistro($event)">
+</app-tabela-registros> <!--aqui minha tabela tem acoes true-->
+

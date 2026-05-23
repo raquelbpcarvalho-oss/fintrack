@@ -1,11 +1,128 @@
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { FinanceiroService } from '../../services/financeiro.service';
+import { ChartConfiguration } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import { TabelaRegistrosComponent } from '../../components/tabela-registros/tabela-registros.component';
+import { FormularioRegistroComponent } from '../../components/formulario-registro/formulario-registro.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormularioRegistroComponent, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
 
+  totalEntradas = 0;
+  totalSaidas = 0;
+  saldoAtual = 0;
+  registrosFiltrados: any[] = [];
+  mesSelecionado = '';
+  categoriaSelecionada = '';
+
+  registros = [
+    {
+      id: crypto.randomUUID(),
+      descricao: 'Salário',
+      tipo: 'Entrada',
+      categoria: 'Salário',
+      data: '2026-05-21',
+      valor: 5000
+    },
+
+    {
+      id: crypto.randomUUID(),
+      descricao: 'Conta de Luz',
+      tipo: 'Saída',
+      categoria: 'Casa',
+      data: '2026-05-20',
+      valor: 250
+    },
+
+    {
+      id: crypto.randomUUID(),
+      descricao: 'Bitcoin',
+      tipo: 'Investimento',
+      categoria: 'Cripto',
+      data: '2026-05-19',
+      valor: 800
+    }
+  ];
+
+  graficoBarra!: ChartConfiguration<'bar'>['data'];
+
+  constructor(private financeiroService: FinanceiroService) {
+    this.registros = this.financeiroService.obterRegistros();
+
+    this.atualizarDashboard();
+  }
+  atualizarDashboard(): void {
+
+    this.totalEntradas = this.registros
+      .filter(registro => registro.tipo === 'Entrada')
+      .reduce((total, registro) => total + registro.valor, 0);
+
+    this.totalSaidas = this.registros
+      .filter(registro => registro.tipo === 'Saída')
+      .reduce((total, registro) => total + registro.valor, 0);
+
+    this.saldoAtual = this.financeiroService.calcularSaldo(
+      this.totalEntradas,
+      this.totalSaidas
+    );
+
+    this.graficoBarra = {
+      labels: ['Entradas', 'Saídas', 'Saldo'],
+      datasets: [
+        {
+          label: 'Financeiro Mensal',
+          data: [
+            this.totalEntradas,
+            this.totalSaidas,
+            this.saldoAtual
+          ]
+        }
+      ]
+    };
+    this.aplicarFiltros();
+  }
+  adicionarRegistro(registro: any): void {
+
+    this.registros.push(registro);
+
+    this.financeiroService.salvarRegistros(this.registros);
+
+    this.atualizarDashboard();
+
+  }
+
+  removerRegistro(id: string): void {
+
+    this.registros = this.registros.filter(
+      registro => registro.id !== id
+    );
+
+    this.financeiroService.salvarRegistros(this.registros);
+
+    this.atualizarDashboard();
+
+  }
+  aplicarFiltros(): void {
+
+  this.registrosFiltrados = this.registros.filter(registro => {
+
+    const atendeMes =
+      this.mesSelecionado === '' ||
+      registro.data.startsWith(this.mesSelecionado);
+
+    const atendeCategoria =
+      this.categoriaSelecionada === '' ||
+      registro.categoria === this.categoriaSelecionada;
+
+    return atendeMes && atendeCategoria;
+  });
+
+}
 }

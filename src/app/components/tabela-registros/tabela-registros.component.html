@@ -1,0 +1,42 @@
+<h2>Registros Financeiros</h2>
+
+<table class="tabela">
+
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th>Data</th>
+            <th>Valor</th>
+
+            <th *ngIf="mostrarAcoes">
+                Ações
+            </th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr *ngFor="let registro of registros">
+
+            <td>{{ registro.descricao }}</td>
+            <td>{{ registro.tipo }}</td>
+            <td>{{ registro.categoria }}</td>
+            <td>{{ registro.data }}</td>
+            <td>R$ {{ registro.valor }}</td>
+
+            <td *ngIf="mostrarAcoes">
+
+                <button (click)="removerRegistro(registro.id)">
+                    Excluir
+                </button>
+
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>
