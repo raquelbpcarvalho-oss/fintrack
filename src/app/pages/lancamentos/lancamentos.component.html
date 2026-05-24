@@ -1,8 +1,13 @@
 <h2 class="page-title">Lançamentos</h2>
+<section class="busca-card">
+    <label for="busca">Buscar por descrição</label>
+
+    <input id="busca" type="text" placeholder="Digite para buscar: salário, saúde, reforma..." [(ngModel)]="termoBusca"
+        (input)="buscarPorDescricao()">
+</section>
 
 <app-formulario-registro (adicionar)="adicionarRegistro($event)">
 </app-formulario-registro>
 
 <app-tabela-registros [registros]="registros" [mostrarAcoes]="true" (remover)="removerRegistro($event)">
 </app-tabela-registros> <!--aqui minha tabela tem acoes true-->
-

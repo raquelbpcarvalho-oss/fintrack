@@ -30,6 +30,12 @@ export class MetasComponent {
   };
 
   constructor(private financeiroService: FinanceiroService) {
+    const perfilSalvo =
+      localStorage.getItem('perfil-financeiro');
+
+    if (perfilSalvo) {
+      this.perfilSelecionado = perfilSalvo;
+    }
     this.calcularMetas();
   }
 
@@ -46,6 +52,10 @@ export class MetasComponent {
 
     const percentual =
       this.perfis[this.perfilSelecionado as keyof typeof this.perfis];
+    localStorage.setItem(
+      'perfil-financeiro',
+      this.perfilSelecionado
+    );
 
     this.tetoGastos = this.financeiroService.calcularTetoGastos(
       this.entradas,
