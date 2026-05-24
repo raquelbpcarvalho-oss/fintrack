@@ -26,6 +26,7 @@ export class DashboardComponent {
   categorias: string[] = [];
   graficoCategorias!: ChartConfiguration<'pie'>['data'];
   graficoBarra!: ChartConfiguration<'bar'>['data'];
+  graficoEvolucao!: ChartConfiguration<'line'>['data'];
 
   registros = [
     {
@@ -91,23 +92,23 @@ export class DashboardComponent {
     );
 
     this.graficoBarra = {
-  labels: ['Entradas', 'Saídas', 'Saldo'],
-  datasets: [
-    {
-      label: 'Financeiro Mensal',
-      data: [
-        this.totalEntradas,
-        this.totalSaidas,
-        this.saldoAtual
-      ],
-      backgroundColor: [
-        '#16a34a',
-        '#dc2626',
-        this.saldoAtual >= 0 ? '#2563eb' : '#dc2626'
+      labels: ['Entradas', 'Saídas', 'Saldo'],
+      datasets: [
+        {
+          label: 'Financeiro Mensal',
+          data: [
+            this.totalEntradas,
+            this.totalSaidas,
+            this.saldoAtual
+          ],
+          backgroundColor: [
+            '#16a34a',
+            '#dc2626',
+            this.saldoAtual >= 0 ? '#2563eb' : '#dc2626'
+          ]
+        }
       ]
-    }
-  ]
-};
+    };
     const despesas = registrosDoMes.filter(
       registro => registro.tipo === 'Saída'
     );
@@ -127,23 +128,62 @@ export class DashboardComponent {
     });
 
     this.graficoCategorias = {
-  labels: Array.from(categoriasMap.keys()),
+      labels: Array.from(categoriasMap.keys()),
 
-  datasets: [
-    {
-      data: Array.from(categoriasMap.values()),
-      backgroundColor: [
-        '#ef4444',
-        '#f97316',
-        '#eab308',
-        '#22c55e',
-        '#3b82f6',
-        '#8b5cf6',
-        '#ec4899'
+      datasets: [
+        {
+          data: Array.from(categoriasMap.values()),
+          backgroundColor: [
+            '#ef4444',
+            '#f97316',
+            '#eab308',
+            '#22c55e',
+            '#3b82f6',
+            '#8b5cf6',
+            '#ec4899'
+          ]
+        }
       ]
-    }
-  ]
-};
+    };
+    const evolucaoMensal =
+      this.financeiroService.calcularEvolucaoMensal(this.registros);
+
+    this.graficoEvolucao = {
+
+      labels: evolucaoMensal.map(item => item.mes),
+
+      datasets: [
+
+        {
+          label: 'Entradas',
+          data: evolucaoMensal.map(item => item.entradas),
+          borderColor: '#16a34a',
+          backgroundColor: '#16a34a',
+          tension: 0.4,
+          fill: false
+        },
+
+        {
+          label: 'Saídas',
+          data: evolucaoMensal.map(item => item.saidas),
+          borderColor: '#dc2626',
+          backgroundColor: '#dc2626',
+          tension: 0.4,
+          fill: false
+        },
+
+        {
+          label: 'Saldo',
+          data: evolucaoMensal.map(item => item.saldo),
+          borderColor: '#2563eb',
+          backgroundColor: '#2563eb',
+          tension: 0.4,
+          fill: false
+        }
+
+      ]
+
+    };
     this.aplicarFiltros();
   }
   adicionarRegistro(registro: any): void {

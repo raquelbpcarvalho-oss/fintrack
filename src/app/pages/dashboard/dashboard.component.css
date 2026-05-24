@@ -50,3 +50,21 @@
     height: auto;
   }
 }
+.grafico-evolucao {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  margin: 32px auto 0;
+  max-width: 900px;
+  min-height: 320px;
+}
+
+.grafico-evolucao h3 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.grafico-evolucao canvas {
+  max-height: 280px;
+}

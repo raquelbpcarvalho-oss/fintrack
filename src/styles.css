@@ -14,3 +14,89 @@ body {
   margin: 0 auto;
   padding: 24px;
 }
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark-mode {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* CONTAINER */
+
+body.dark-mode .container {
+  background: #0f172a;
+}
+
+/* TÍTULOS */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode label {
+  color: #f8fafc;
+}
+
+/* CARDS */
+
+body.dark-mode .card,
+body.dark-mode .card-meta,
+body.dark-mode .perfil-card,
+body.dark-mode .resultado-card,
+body.dark-mode .formulario,
+body.dark-mode .busca-card,
+body.dark-mode .filtros,
+body.dark-mode .grafico-container,
+body.dark-mode .sem-registros,
+body.dark-mode .tabela-card {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+/* INPUTS */
+
+body.dark-mode input,
+body.dark-mode select {
+  background: #0f172a;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+/* PLACEHOLDER */
+
+body.dark-mode input::placeholder {
+  color: #94a3b8;
+}
+
+/* TABELA */
+
+body.dark-mode .tabela {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+body.dark-mode .tabela td {
+  border-bottom-color: #334155;
+}
+
+body.dark-mode .tabela tbody tr:nth-child(even) {
+  background: #263449;
+}
+
+body.dark-mode .tabela tbody tr:hover {
+  background: #334155;
+}
+
+/* MINI CARDS */
+
+body.dark-mode .resultado-grid div {
+  background: #0f172a;
+}
+
+/* TEXTO SECUNDÁRIO */
+
+body.dark-mode p,
+body.dark-mode span {
+  color: #cbd5e1;
+}

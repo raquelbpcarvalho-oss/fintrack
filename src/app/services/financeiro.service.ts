@@ -62,15 +62,48 @@ export class FinanceiroService {
     return saldoMeta / diasRestantes;
   }
   obterCategorias(): string[] {
-  return [
-    'Salário',
-    'Casa',
-    'Alimentação',
-    'Transporte',
-    'Lazer',
-    'Saúde',
-    'Educação',
-    'Investimentos'
-  ];
-}
+    return [
+      'Salário',
+      'Casa',
+      'Alimentação',
+      'Transporte',
+      'Lazer',
+      'Saúde',
+      'Educação',
+      'Investimentos'
+    ];
+  }
+  calcularEvolucaoMensal(registros: any[]): any[] {
+
+    const mesesMap = new Map<string, any>();
+
+    registros.forEach(registro => {
+
+      const mes = registro.data.substring(0, 7);
+
+      if (!mesesMap.has(mes)) {
+        mesesMap.set(mes, {
+          mes,
+          entradas: 0,
+          saidas: 0,
+          saldo: 0
+        });
+      }
+
+      const resumoMes = mesesMap.get(mes);
+
+      if (registro.tipo === 'Entrada') {
+        resumoMes.entradas += registro.valor;
+      }
+
+      if (registro.tipo === 'Saída') {
+        resumoMes.saidas += registro.valor;
+      }
+
+      resumoMes.saldo =
+        resumoMes.entradas - resumoMes.saidas;
+    });
+
+    return Array.from(mesesMap.values());
+  }
 }

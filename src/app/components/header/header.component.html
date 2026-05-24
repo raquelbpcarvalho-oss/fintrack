@@ -1,14 +1,17 @@
 <header class="navbar">
 
-  <div class="logo-area">
-    <div class="logo-icon">FT</div>
-    <h1>FinTrack</h1>
-  </div>
+    <div class="logo-area">
+        <div class="logo-icon">FT</div>
+        <h1>FinTrack</h1>
+    </div>
 
-  <nav class="menu">
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/lancamentos">Lançamentos</a>
-    <a routerLink="/metas">Metas</a>
-  </nav>
+    <nav class="menu">
+        <a routerLink="/dashboard">Dashboard</a>
+        <a routerLink="/lancamentos">Lançamentos</a>
+        <a routerLink="/metas">Metas</a>
+    </nav>
+    <button class="theme-button" type="button" (click)="alternarTema()">
+        {{ darkMode ? '☀️ Claro' : '🌙 Escuro' }}
+    </button>
 
 </header>
