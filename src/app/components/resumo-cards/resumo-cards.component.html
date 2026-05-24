@@ -1,1 +1,24 @@
-<p>resumo-cards works!</p>
+<section class="cards-resumo">
+
+  <mat-card class="card entrada">
+    <mat-card-title>Total de Entradas</mat-card-title>
+    <mat-card-content>
+      <p>{{ totalEntradas | currency:'BRL' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card saida">
+    <mat-card-title>Total de Saídas</mat-card-title>
+    <mat-card-content>
+      <p>{{ totalSaidas | currency:'BRL' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card saldo">
+    <mat-card-title>Saldo Atual</mat-card-title>
+    <mat-card-content>
+      <p>{{ saldoAtual | currency:'BRL' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+</section>

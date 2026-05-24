@@ -1,1 +1,58 @@
-<p>filtros works!</p>
+<<div class="filtros">
+
+  <div>
+
+    <label for="mes">
+      Filtrar por mês
+    </label>
+
+    <input
+      id="mes"
+      name="mes"
+      type="month"
+      [ngModel]="mesSelecionado"
+      (ngModelChange)="mesSelecionadoChange.emit($event)">
+
+  </div>
+
+  <div>
+
+    <label for="categoriaFiltro">
+      Filtrar por categoria
+    </label>
+
+    <select
+      id="categoriaFiltro"
+      name="categoriaFiltro"
+      [ngModel]="categoriaSelecionada"
+      (ngModelChange)="categoriaSelecionadaChange.emit($event)">
+
+      <option value="">
+        Todas as categorias
+      </option>
+
+      <option
+        *ngFor="let categoria of categorias"
+        [value]="categoria">
+
+        {{ categoria }}
+
+      </option>
+
+    </select>
+
+  </div>
+
+  <div>
+
+    <button
+      type="button"
+      (click)="limpar.emit()">
+
+      Limpar filtros
+
+    </button>
+
+  </div>
+
+</div>

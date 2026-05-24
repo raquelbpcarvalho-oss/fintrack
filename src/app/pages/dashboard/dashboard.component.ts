@@ -4,14 +4,14 @@ import { FinanceiroService } from '../../services/financeiro.service';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { TabelaRegistrosComponent } from '../../components/tabela-registros/tabela-registros.component';
-import { FormularioRegistroComponent } from '../../components/formulario-registro/formulario-registro.component';
 import { FormsModule } from '@angular/forms';
-import { CurrencyPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { ResumoCardsComponent } from '../../components/resumo-cards/resumo-cards.component';
+import { FiltrosComponent } from '../../components/filtros/filtros.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormularioRegistroComponent, FormsModule, CurrencyPipe, CommonModule],
+  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormsModule, CommonModule, ResumoCardsComponent, FiltrosComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -24,6 +24,8 @@ export class DashboardComponent {
   mesSelecionado = '';
   categoriaSelecionada = '';
   categorias: string[] = [];
+  graficoCategorias!: ChartConfiguration<'pie'>['data'];
+  graficoBarra!: ChartConfiguration<'bar'>['data'];
 
   registros = [
     {
@@ -54,8 +56,6 @@ export class DashboardComponent {
     }
   ];
 
-  graficoBarra!: ChartConfiguration<'bar'>['data'];
-
   constructor(private financeiroService: FinanceiroService) {
 
     this.registros =
@@ -68,12 +68,20 @@ export class DashboardComponent {
 
   }
   atualizarDashboard(): void {
+    const registrosDoMes = this.registros.filter(registro => {
 
-    this.totalEntradas = this.registros
+      if (this.mesSelecionado === '') {
+        return true;
+      }
+
+      return registro.data.startsWith(this.mesSelecionado);
+    });
+
+    this.totalEntradas = registrosDoMes
       .filter(registro => registro.tipo === 'Entrada')
       .reduce((total, registro) => total + registro.valor, 0);
 
-    this.totalSaidas = this.registros
+    this.totalSaidas = registrosDoMes
       .filter(registro => registro.tipo === 'Saída')
       .reduce((total, registro) => total + registro.valor, 0);
 
@@ -94,6 +102,35 @@ export class DashboardComponent {
           ]
         }
       ]
+    };
+    const despesas = registrosDoMes.filter(
+      registro => registro.tipo === 'Saída'
+    );
+
+    const categoriasMap = new Map<string, number>();
+
+    despesas.forEach(registro => {
+
+      const valorAtual =
+        categoriasMap.get(registro.categoria) || 0;
+
+      categoriasMap.set(
+        registro.categoria,
+        valorAtual + registro.valor
+      );
+
+    });
+
+    this.graficoCategorias = {
+
+      labels: Array.from(categoriasMap.keys()),
+
+      datasets: [
+        {
+          data: Array.from(categoriasMap.values())
+        }
+      ]
+
     };
     this.aplicarFiltros();
   }
