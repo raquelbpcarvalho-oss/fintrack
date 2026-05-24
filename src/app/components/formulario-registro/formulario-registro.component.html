@@ -1,39 +1,67 @@
-<h2>Novo Registro</h2>
+<section class="form-card">
 
-<form class="formulario" (ngSubmit)="adicionarRegistro()">
+  <h2>Novo Registro</h2>
 
-    <label for="descricao">Descrição</label>
+  <form class="formulario" (ngSubmit)="adicionarRegistro()">
 
-    <input id="descricao" type="text" placeholder="Descrição" name="descricao" [(ngModel)]="descricao" required>
+    <div class="campo descricao">
+      <label for="descricao">Descrição</label>
+      <input
+        id="descricao"
+        type="text"
+        placeholder="Ex: Salário, aluguel, mercado..."
+        name="descricao"
+        [(ngModel)]="descricao"
+        required>
+    </div>
 
-    <label for="tipo">Tipo</label>
-    <select id="tipo" name="tipo" [(ngModel)]="tipo" required>
+    <div class="campo">
+      <label for="tipo">Tipo</label>
+      <select id="tipo" name="tipo" [(ngModel)]="tipo" required>
         <option value="Entrada">Entrada</option>
         <option value="Saída">Saída</option>
         <option value="Investimento">Investimento</option>
-    </select>
-    <label for="categoria">Categoria</label>
+      </select>
+    </div>
 
-    <select id="categoria" name="categoria" [(ngModel)]="categoria" required>
-<option value="">Selecione</option>
+    <div class="campo">
+      <label for="categoria">Categoria</label>
+      <select id="categoria" name="categoria" [(ngModel)]="categoria" required>
+        <option value="">Selecione</option>
 
-<!--troquei toda a lista de categorias pelo serviço-->
-<option 
-  *ngFor="let categoria of categorias"
-  [value]="categoria">
+        <option
+          *ngFor="let categoria of categorias"
+          [value]="categoria">
+          {{ categoria }}
+        </option>
+      </select>
+    </div>
 
-  {{ categoria }}
+    <div class="campo">
+      <label for="data">Data</label>
+      <input
+        id="data"
+        type="date"
+        name="data"
+        [(ngModel)]="data"
+        required>
+    </div>
 
-</option>
+    <div class="campo">
+      <label for="valor">Valor</label>
+      <input
+        id="valor"
+        type="number"
+        placeholder="0,00"
+        name="valor"
+        [(ngModel)]="valor"
+        required>
+    </div>
 
-    </select>
+    <button class="btn-adicionar" type="submit">
+      Adicionar
+    </button>
 
-    <label for="data">Data</label>
-    <input id="data" type="date" name="data" [(ngModel)]="data" required>
+  </form>
 
-    <label for="valor">Valor</label>
-    <input id="valor" type="number" placeholder="Valor" name="valor" [(ngModel)]="valor" required>
-
-    <button type="submit">Adicionar</button>
-
-</form>
+</section>

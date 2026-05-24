@@ -91,18 +91,23 @@ export class DashboardComponent {
     );
 
     this.graficoBarra = {
-      labels: ['Entradas', 'Saídas', 'Saldo'],
-      datasets: [
-        {
-          label: 'Financeiro Mensal',
-          data: [
-            this.totalEntradas,
-            this.totalSaidas,
-            this.saldoAtual
-          ]
-        }
+  labels: ['Entradas', 'Saídas', 'Saldo'],
+  datasets: [
+    {
+      label: 'Financeiro Mensal',
+      data: [
+        this.totalEntradas,
+        this.totalSaidas,
+        this.saldoAtual
+      ],
+      backgroundColor: [
+        '#16a34a',
+        '#dc2626',
+        this.saldoAtual >= 0 ? '#2563eb' : '#dc2626'
       ]
-    };
+    }
+  ]
+};
     const despesas = registrosDoMes.filter(
       registro => registro.tipo === 'Saída'
     );
@@ -122,16 +127,23 @@ export class DashboardComponent {
     });
 
     this.graficoCategorias = {
+  labels: Array.from(categoriasMap.keys()),
 
-      labels: Array.from(categoriasMap.keys()),
-
-      datasets: [
-        {
-          data: Array.from(categoriasMap.values())
-        }
+  datasets: [
+    {
+      data: Array.from(categoriasMap.values()),
+      backgroundColor: [
+        '#ef4444',
+        '#f97316',
+        '#eab308',
+        '#22c55e',
+        '#3b82f6',
+        '#8b5cf6',
+        '#ec4899'
       ]
-
-    };
+    }
+  ]
+};
     this.aplicarFiltros();
   }
   adicionarRegistro(registro: any): void {

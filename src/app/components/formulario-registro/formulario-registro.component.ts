@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FinanceiroService } from '../../services/financeiro.service';
 import { CurrencyPipe } from '@angular/common';

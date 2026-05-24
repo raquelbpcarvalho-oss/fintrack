@@ -1,81 +1,87 @@
 <h2 class="page-title">Metas Financeiras</h2>
 
-<section class="meta-card">
+<section class="perfil-card">
+  <div>
+    <h3>Perfil financeiro</h3>
+    <p>Escolha o limite ideal de gastos para acompanhar sua meta mensal.</p>
+  </div>
 
-    <label for="perfil">Escolha seu perfil financeiro</label>
+  <select
+    id="perfil"
+    name="perfil"
+    [(ngModel)]="perfilSelecionado"
+    (change)="calcularMetas()">
 
-    <select id="perfil" name="perfil" [(ngModel)]="perfilSelecionado" (change)="calcularMetas()">
+    <option value="conservador">
+      Conservador - até 50% das entradas
+    </option>
 
-        <option value="conservador">
-            Conservador - até 50% das entradas
-        </option>
+    <option value="moderado">
+      Moderado - até 70% das entradas
+    </option>
 
-        <option value="moderado">
-            Moderado - até 70% das entradas
-        </option>
+    <option value="arrojado">
+      Arrojado - até 85% das entradas
+    </option>
 
-        <option value="arrojado">
-            Arrojado - até 85% das entradas
-        </option>
+  </select>
+</section>
 
-    </select>
+<section class="cards-metas">
+
+  <div class="card-meta entrada">
+    <span>Total de Entradas</span>
+    <strong>{{ entradas | currency:'BRL' }}</strong>
+  </div>
+
+  <div class="card-meta saida">
+    <span>Total de Saídas</span>
+    <strong>{{ saidas | currency:'BRL' }}</strong>
+  </div>
+
+  <div class="card-meta teto">
+    <span>Teto de Gastos</span>
+    <strong>{{ tetoGastos | currency:'BRL' }}</strong>
+  </div>
 
 </section>
 
-<section class="cards-resumo">
+<section
+  class="resultado-card"
+  [ngClass]="{
+    'status-positivo': saldoMeta > 0,
+    'status-alerta': saldoMeta === 0,
+    'status-negativo': saldoMeta < 0
+  }">
 
-    <div class="card">
-        <h3>Total de Entradas</h3>
-
-        <p>
-            {{ entradas | currency:'BRL' }}
-        </p>
+  <div class="resultado-header">
+    <div>
+      <h3>Resultado da Meta</h3>
+      <p>{{ mensagemStatus }}</p>
     </div>
 
-    <div class="card">
-        <h3>Total de Saídas</h3>
+    <span class="status-badge">
+      {{ saldoMeta > 0 ? 'Dentro da meta' : saldoMeta === 0 ? 'No limite' : 'Meta ultrapassada' }}
+    </span>
+  </div>
 
-        <p>
-            {{ saidas | currency:'BRL' }}
-        </p>
+  <div class="resultado-grid">
+
+    <div>
+      <span>Saldo da meta</span>
+      <strong>{{ saldoMeta | currency:'BRL' }}</strong>
     </div>
 
-    <div class="card">
-        <h3>Teto de Gastos</h3>
-
-        <p>
-            {{ tetoGastos | currency:'BRL' }}
-        </p>
+    <div>
+      <span>Dias restantes no mês</span>
+      <strong>{{ diasRestantes }}</strong>
     </div>
 
-</section>
+    <div>
+      <span>Margem de gasto diário</span>
+      <strong>{{ gastoDiario | currency:'BRL' }}</strong>
+    </div>
 
-<section class="meta-card">
-
-    <h3>Resultado da Meta</h3>
-
-    <p>
-        <strong>Saldo da meta:</strong>
-
-        {{ saldoMeta | currency:'BRL' }}
-    </p>
-
-    <p>
-        <strong>Dias restantes no mês:</strong>
-
-        {{ diasRestantes }}
-    </p>
-
-    <p>
-        <strong>Margem de gasto diário:</strong>
-
-        {{ gastoDiario | currency:'BRL' }}
-    </p>
-
-    <p>
-        <strong>Status:</strong>
-
-        {{ mensagemStatus }}
-    </p>
+  </div>
 
 </section>

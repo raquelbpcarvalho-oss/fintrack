@@ -1,10 +1,7 @@
-<<div class="filtros">
+<section class="filtros-card">
 
-  <div>
-
-    <label for="mes">
-      Filtrar por mês
-    </label>
+  <div class="campo-filtro">
+    <label for="mes">Filtrar por mês</label>
 
     <input
       id="mes"
@@ -12,14 +9,10 @@
       type="month"
       [ngModel]="mesSelecionado"
       (ngModelChange)="mesSelecionadoChange.emit($event)">
-
   </div>
 
-  <div>
-
-    <label for="categoriaFiltro">
-      Filtrar por categoria
-    </label>
+  <div class="campo-filtro">
+    <label for="categoriaFiltro">Filtrar por categoria</label>
 
     <select
       id="categoriaFiltro"
@@ -27,32 +20,22 @@
       [ngModel]="categoriaSelecionada"
       (ngModelChange)="categoriaSelecionadaChange.emit($event)">
 
-      <option value="">
-        Todas as categorias
-      </option>
+      <option value="">Todas as categorias</option>
 
       <option
         *ngFor="let categoria of categorias"
         [value]="categoria">
-
         {{ categoria }}
-
       </option>
 
     </select>
-
   </div>
 
-  <div>
+  <button
+    class="btn-limpar"
+    type="button"
+    (click)="limpar.emit()">
+    Limpar filtros
+  </button>
 
-    <button
-      type="button"
-      (click)="limpar.emit()">
-
-      Limpar filtros
-
-    </button>
-
-  </div>
-
-</div>
+</section>

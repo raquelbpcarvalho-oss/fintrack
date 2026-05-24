@@ -13,11 +13,15 @@
       <p>{{ totalSaidas | currency:'BRL' }}</p>
     </mat-card-content>
   </mat-card>
-
   <mat-card class="card saldo">
     <mat-card-title>Saldo Atual</mat-card-title>
+
     <mat-card-content>
-      <p>{{ saldoAtual | currency:'BRL' }}</p>
+
+      <p [ngClass]="saldoAtual < 0 ? 'saldo-negativo' : 'saldo-positivo'">
+        {{ saldoAtual | currency:'BRL' }}
+      </p>
+
     </mat-card-content>
   </mat-card>
 

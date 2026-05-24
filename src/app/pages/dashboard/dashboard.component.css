@@ -1,0 +1,52 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-title {
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+.graficos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 32px auto 0;
+  max-width: 900px;
+  align-items: start;
+}
+
+.grafico-container {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  height: 300px;
+}
+
+.grafico-container h3 {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.grafico-container canvas {
+  max-height: 230px;
+}
+
+.grafico-pizza {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .graficos-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .grafico-container {
+    height: auto;
+  }
+}

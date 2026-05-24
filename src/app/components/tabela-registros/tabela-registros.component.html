@@ -1,42 +1,86 @@
-<h2>Registros Financeiros</h2>
+<section class="tabela-card">
 
-<table class="tabela">
+  <h2>Registros Financeiros</h2>
 
-    <thead>
+  <div
+    class="sem-registros"
+    *ngIf="registros.length === 0">
+
+    Nenhum registro encontrado.
+
+  </div>
+
+  <div
+    class="tabela-wrapper"
+    *ngIf="registros.length > 0">
+
+    <table class="tabela">
+
+      <thead>
         <tr>
-            <th>Descrição</th>
-            <th>Tipo</th>
-            <th>Categoria</th>
-            <th>Data</th>
-            <th>Valor</th>
+          <th>Descrição</th>
+          <th>Tipo</th>
+          <th>Categoria</th>
+          <th>Data</th>
+          <th>Valor</th>
 
-            <th *ngIf="mostrarAcoes">
-                Ações
-            </th>
-
+          <th *ngIf="mostrarAcoes">
+            Ações
+          </th>
         </tr>
-    </thead>
+      </thead>
 
-    <tbody>
+      <tbody>
 
         <tr *ngFor="let registro of registros">
 
-            <td>{{ registro.descricao }}</td>
-            <td>{{ registro.tipo }}</td>
-            <td>{{ registro.categoria }}</td>
-            <td>{{ registro.data | date:'dd/MM/yyyy' }}</td>
-            <td>{{ registro.valor | currency:'BRL' }}</td>
+          <td>{{ registro.descricao }}</td>
 
-            <td *ngIf="mostrarAcoes">
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-entrada': registro.tipo === 'Entrada',
+                'badge-saida': registro.tipo === 'Saída',
+                'badge-investimento': registro.tipo === 'Investimento'
+              }">
+              {{ registro.tipo }}
+            </span>
+          </td>
 
-                <button (click)="removerRegistro(registro.id)">
-                    Excluir
-                </button>
+          <td>{{ registro.categoria }}</td>
 
-            </td>
+          <td>{{ registro.data | date:'dd/MM/yyyy' }}</td>
+
+          <td
+            class="valor"
+            [ngClass]="registro.tipo === 'Saída' ? 'valor-saida' : 'valor-entrada'">
+
+            {{ registro.valor | currency:'BRL' }}
+
+          </td>
+
+          <td *ngIf="mostrarAcoes">
+
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              aria-label="Excluir registro"
+              (click)="removerRegistro(registro.id)">
+
+              <mat-icon>delete</mat-icon>
+
+            </button>
+
+          </td>
 
         </tr>
 
-    </tbody>
+      </tbody>
 
-</table>
+    </table>
+
+  </div>
+
+</section>

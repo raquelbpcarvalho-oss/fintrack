@@ -1,43 +1,89 @@
-.formulario {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-  align-items: end;
-
-  background: white;
-  padding: 24px;
-  border-radius: 16px;
+.form-card {
   margin-bottom: 32px;
 }
 
-.formulario div {
+.form-card h2 {
+  margin-bottom: 18px;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.formulario {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 18px;
+  align-items: end;
+}
+
+.campo {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
-.formulario label {
-  margin-bottom: 6px;
+.campo label {
   font-weight: 600;
+  color: #334155;
 }
 
-.formulario input,
-.formulario select {
-  padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+.campo input,
+.campo select {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
   font-size: 14px;
 }
 
-.formulario button {
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #1e3a8a;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.formulario button:hover {
-  background: #1d4ed8;
+.btn-adicionar {
+  height: 42px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 10px;
+  background: #1e3a8a;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-adicionar:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .formulario {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .descricao {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .descricao {
+    grid-column: span 1;
+  }
+
+  .btn-adicionar {
+    width: 100%;
+  }
 }

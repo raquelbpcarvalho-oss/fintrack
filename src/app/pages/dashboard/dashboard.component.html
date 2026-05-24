@@ -13,13 +13,18 @@
     <!-- Tabela somente para visualização no Dashboard -->
 </app-tabela-registros>
 
-<div class="grafico-container">
-    <canvas baseChart [data]="graficoBarra" [type]="'bar'"></canvas>
-</div>
-<div class="grafico-container">
+<div class="graficos-grid">
+    <div class="grafico-container">
+        <h3>Resumo Mensal</h3>
 
-    <canvas baseChart [data]="graficoCategorias" [type]="'pie'">
+        <canvas baseChart [data]="graficoBarra" [type]="'bar'">
+        </canvas>
+    </div>
 
-    </canvas>
+    <div class="grafico-container grafico-pizza">
+        <h3>Despesas por Categoria</h3>
 
+        <canvas baseChart [data]="graficoCategorias" [type]="'pie'">
+        </canvas>
+    </div>
 </div>

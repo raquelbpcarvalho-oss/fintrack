@@ -1,0 +1,66 @@
+.filtros-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  margin: 28px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 18px;
+  align-items: end;
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-filtro label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.campo-filtro input,
+.campo-filtro select {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.campo-filtro input:focus,
+.campo-filtro select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.btn-limpar {
+  height: 42px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: #1e3a8a;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-limpar:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .filtros-card {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-limpar {
+    width: 100%;
+  }
+}
