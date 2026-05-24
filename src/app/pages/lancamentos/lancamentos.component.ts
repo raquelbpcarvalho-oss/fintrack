@@ -19,37 +19,47 @@ export class LancamentosComponent {
   constructor(private financeiroService: FinanceiroService, private snackBar: MatSnackBar) {
     this.carregarRegistros();
   }
+
+  //GET
   carregarRegistros(): void {
 
-    const todosRegistros =
-      this.financeiroService.obterRegistros();
+    this.financeiroService
+      .obterRegistrosApi()
+      .subscribe(registros => {
 
-    this.registros = todosRegistros.filter(registro =>
+        this.registros = registros;
 
-      registro.descricao
-        .toLowerCase()
-        .includes(this.termoBusca.toLowerCase())
+      });
 
-    );
   }
+
   buscarPorDescricao(): void {
     this.carregarRegistros();
   }
 
+  //POST
   adicionarRegistro(registro: any): void {
-    this.registros.push(registro);
-    this.financeiroService.salvarRegistros(this.registros);
-    this.carregarRegistros();
-    this.snackBar.open(
-      'Registro adicionado com sucesso!',
-      'Fechar',
-      {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      }
-    );
+
+    this.financeiroService
+      .adicionarRegistroApi(registro)
+      .subscribe(() => {
+
+        this.carregarRegistros();
+
+        this.snackBar.open(
+          'Registro adicionado com sucesso!',
+          'Fechar',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
+
+      });
+
   }
+  //DELETE
   removerRegistro(id: string): void {
 
     const confirmar = confirm(
@@ -60,21 +70,24 @@ export class LancamentosComponent {
       return;
     }
 
-    this.registros = this.registros.filter(
-      registro => registro.id !== id
-    );
+    this.financeiroService
+      .removerRegistroApi(id)
+      .subscribe(() => {
 
-    this.financeiroService.salvarRegistros(this.registros);
+        this.carregarRegistros();
 
-    this.carregarRegistros();
-    this.snackBar.open(
-      'Registro removido com sucesso!',
-      'Fechar',
-      {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      }
-    );
+        this.snackBar.open(
+          'Registro removido com sucesso!',
+          'Fechar',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
+
+      });
+
   }
+
 }

@@ -8,10 +8,19 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ResumoCardsComponent } from '../../components/resumo-cards/resumo-cards.component';
 import { FiltrosComponent } from '../../components/filtros/filtros.component';
+import { RegistroFinanceiro } from '../../models/registro-financeiro.model';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, BaseChartDirective, TabelaRegistrosComponent, FormsModule, CommonModule, ResumoCardsComponent, FiltrosComponent],
+  imports: [
+    MatCardModule,
+    BaseChartDirective,
+    TabelaRegistrosComponent,
+    FormsModule,
+    CommonModule,
+    ResumoCardsComponent,
+    FiltrosComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -20,54 +29,35 @@ export class DashboardComponent {
   totalEntradas = 0;
   totalSaidas = 0;
   saldoAtual = 0;
-  registrosFiltrados: any[] = [];
+
+  registros: RegistroFinanceiro[] = [];
+  registrosFiltrados: RegistroFinanceiro[] = [];
+
   mesSelecionado = '';
   categoriaSelecionada = '';
   categorias: string[] = [];
+
   graficoCategorias!: ChartConfiguration<'pie'>['data'];
   graficoBarra!: ChartConfiguration<'bar'>['data'];
   graficoEvolucao!: ChartConfiguration<'line'>['data'];
 
-  registros = [
-    {
-      id: crypto.randomUUID(),
-      descricao: 'Salário',
-      tipo: 'Entrada',
-      categoria: 'Salário',
-      data: '2026-05-21',
-      valor: 5000
-    },
-
-    {
-      id: crypto.randomUUID(),
-      descricao: 'Conta de Luz',
-      tipo: 'Saída',
-      categoria: 'Casa',
-      data: '2026-05-20',
-      valor: 250
-    },
-
-    {
-      id: crypto.randomUUID(),
-      descricao: 'Bitcoin',
-      tipo: 'Investimento',
-      categoria: 'Cripto',
-      data: '2026-05-19',
-      valor: 800
-    }
-  ];
-
   constructor(private financeiroService: FinanceiroService) {
+    this.categorias = this.financeiroService.obterCategorias();
 
-    this.registros =
-      this.financeiroService.obterRegistros();
-
-    this.categorias =
-      this.financeiroService.obterCategorias();
-
-    this.atualizarDashboard();
-
+    this.carregarRegistros();
   }
+
+  carregarRegistros(): void {
+    // GET: busca os registros da API json-server
+    this.financeiroService
+      .obterRegistrosApi()
+      .subscribe(registros => {
+        this.registros = registros;
+
+        this.atualizarDashboard();
+      });
+  }
+
   atualizarDashboard(): void {
     const registrosDoMes = this.registros.filter(registro => {
 
@@ -109,6 +99,7 @@ export class DashboardComponent {
         }
       ]
     };
+
     const despesas = registrosDoMes.filter(
       registro => registro.tipo === 'Saída'
     );
@@ -116,7 +107,6 @@ export class DashboardComponent {
     const categoriasMap = new Map<string, number>();
 
     despesas.forEach(registro => {
-
       const valorAtual =
         categoriasMap.get(registro.categoria) || 0;
 
@@ -124,12 +114,10 @@ export class DashboardComponent {
         registro.categoria,
         valorAtual + registro.valor
       );
-
     });
 
     this.graficoCategorias = {
       labels: Array.from(categoriasMap.keys()),
-
       datasets: [
         {
           data: Array.from(categoriasMap.values()),
@@ -145,15 +133,13 @@ export class DashboardComponent {
         }
       ]
     };
+
     const evolucaoMensal =
       this.financeiroService.calcularEvolucaoMensal(this.registros);
 
     this.graficoEvolucao = {
-
       labels: evolucaoMensal.map(item => item.mes),
-
       datasets: [
-
         {
           label: 'Entradas',
           data: evolucaoMensal.map(item => item.entradas),
@@ -162,7 +148,6 @@ export class DashboardComponent {
           tension: 0.4,
           fill: false
         },
-
         {
           label: 'Saídas',
           data: evolucaoMensal.map(item => item.saidas),
@@ -171,7 +156,6 @@ export class DashboardComponent {
           tension: 0.4,
           fill: false
         },
-
         {
           label: 'Saldo',
           data: evolucaoMensal.map(item => item.saldo),
@@ -180,35 +164,31 @@ export class DashboardComponent {
           tension: 0.4,
           fill: false
         }
-
       ]
-
     };
+
     this.aplicarFiltros();
   }
-  adicionarRegistro(registro: any): void {
 
-    this.registros.push(registro);
-
-    this.financeiroService.salvarRegistros(this.registros);
-
-    this.atualizarDashboard();
-
+  adicionarRegistro(registro: RegistroFinanceiro): void {
+    // POST: envia um novo registro para a API
+    this.financeiroService
+      .adicionarRegistroApi(registro)
+      .subscribe(() => {
+        this.carregarRegistros();
+      });
   }
 
   removerRegistro(id: string): void {
-
-    this.registros = this.registros.filter(
-      registro => registro.id !== id
-    );
-
-    this.financeiroService.salvarRegistros(this.registros);
-
-    this.atualizarDashboard();
-
+    // DELETE: remove um registro da API pelo id
+    this.financeiroService
+      .removerRegistroApi(id)
+      .subscribe(() => {
+        this.carregarRegistros();
+      });
   }
-  aplicarFiltros(): void {
 
+  aplicarFiltros(): void {
     this.registrosFiltrados = this.registros.filter(registro => {
 
       const atendeMes =
@@ -221,12 +201,11 @@ export class DashboardComponent {
 
       return atendeMes && atendeCategoria;
     });
-
   }
+
   limparFiltros(): void {
     this.mesSelecionado = '';
     this.categoriaSelecionada = '';
     this.aplicarFiltros();
   }
-
 }

@@ -6,11 +6,12 @@
     <p>Escolha o limite ideal de gastos para acompanhar sua meta mensal.</p>
   </div>
 
+  <label for="perfil">Escolha seu perfil financeiro</label>
   <select
     id="perfil"
     name="perfil"
     [(ngModel)]="perfilSelecionado"
-    (change)="calcularMetas()">
+    (change)="carregarRegistros()">
 
     <option value="conservador">
       Conservador - até 50% das entradas

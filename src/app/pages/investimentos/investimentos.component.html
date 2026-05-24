@@ -1,0 +1,29 @@
+<div class="container">
+
+  <h2 class="page-title">
+    Área de Investimentos
+  </h2>
+
+  <app-resumo-cards
+    [totalEntradas]="totalInvestido"
+    [totalSaidas]="0"
+    [saldoAtual]="totalInvestido">
+  </app-resumo-cards>
+
+  <div class="info-card">
+    <h3>Total Investido</h3>
+
+    <p>
+      {{
+        totalInvestido
+        | currency:'BRL'
+      }}
+    </p>
+  </div>
+
+  <app-tabela-registros
+    [registros]="investimentos"
+    [mostrarAcoes]="false">
+  </app-tabela-registros>
+
+</div>

@@ -1,0 +1,77 @@
+{
+  "registros": [
+    {
+      "id": "1",
+      "descricao": "Salário",
+      "tipo": "Entrada",
+      "categoria": "Salário",
+      "data": "2026-05-21",
+      "valor": 5000
+    },
+    {
+      "id": "2",
+      "descricao": "Conta de Luz",
+      "tipo": "Saída",
+      "categoria": "Casa",
+      "data": "2026-05-20",
+      "valor": 250
+    },
+    {
+      "id": "3",
+      "descricao": "Bitcoin",
+      "tipo": "Investimento",
+      "categoria": "Investimentos",
+      "data": "2026-05-19",
+      "valor": 800
+    },
+    {
+      "id": "F6tmsiN9EAQ",
+      "descricao": "plano de saude",
+      "tipo": "Saída",
+      "categoria": "Saúde",
+      "data": "2026-05-24",
+      "valor": 1000
+    },
+    {
+      "id": "mvSdQ_uiFOs",
+      "descricao": "supermercado",
+      "tipo": "Saída",
+      "categoria": "Alimentação",
+      "data": "2026-05-24",
+      "valor": 400
+    },
+    {
+      "id": "RY0y4FYkNRY",
+      "descricao": "cinema",
+      "tipo": "Saída",
+      "categoria": "Lazer",
+      "data": "2026-05-24",
+      "valor": 50
+    },
+    {
+      "id": "qnLuMSoALho",
+      "descricao": "Faculdade",
+      "tipo": "Saída",
+      "categoria": "Educação",
+      "data": "2026-05-24",
+      "valor": 1500
+    },
+    {
+      "id": "MGCG5rL7hFY",
+      "descricao": "Aplicação em LCI",
+      "tipo": "Investimento",
+      "categoria": "Investimentos",
+      "data": "2026-05-24",
+      "valor": 5000
+    },
+    {
+      "id": "pfHsWXURyfE",
+      "descricao": "investimento em CDB",
+      "tipo": "Investimento",
+      "categoria": "Investimentos",
+      "data": "2026-05-24",
+      "valor": 1000
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

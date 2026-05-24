@@ -36,12 +36,20 @@ export class MetasComponent {
     if (perfilSalvo) {
       this.perfilSelecionado = perfilSalvo;
     }
-    this.calcularMetas();
+
+    this.carregarRegistros();
   }
 
-  calcularMetas(): void {
-    const registros = this.financeiroService.obterRegistros();
+  carregarRegistros(): void {
+    // GET: busca os registros da API para calcular as metas
+    this.financeiroService
+      .obterRegistrosApi()
+      .subscribe(registros => {
+        this.calcularMetas(registros);
+      });
+  }
 
+  calcularMetas(registros: any[]): void {
     this.entradas = registros
       .filter(registro => registro.tipo === 'Entrada')
       .reduce((total, registro) => total + registro.valor, 0);
@@ -52,6 +60,7 @@ export class MetasComponent {
 
     const percentual =
       this.perfis[this.perfilSelecionado as keyof typeof this.perfis];
+
     localStorage.setItem(
       'perfil-financeiro',
       this.perfilSelecionado
