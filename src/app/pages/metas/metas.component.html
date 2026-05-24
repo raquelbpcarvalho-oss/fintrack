@@ -1,31 +1,39 @@
 <h2 class="page-title">Metas Financeiras</h2>
 
 <section class="perfil-card">
+
   <div>
     <h3>Perfil financeiro</h3>
-    <p>Escolha o limite ideal de gastos para acompanhar sua meta mensal.</p>
+
+    <p>
+      Escolha o limite ideal de gastos para acompanhar sua meta mensal.
+    </p>
   </div>
 
-  <label for="perfil">Escolha seu perfil financeiro</label>
-  <select
-    id="perfil"
-    name="perfil"
-    [(ngModel)]="perfilSelecionado"
-    (change)="carregarRegistros()">
+  <div class="perfil-select">
 
-    <option value="conservador">
-      Conservador - até 50% das entradas
-    </option>
+    <label for="perfil">
+      Escolha seu perfil financeiro
+    </label>
 
-    <option value="moderado">
-      Moderado - até 70% das entradas
-    </option>
+    <select id="perfil" name="perfil" [(ngModel)]="perfilSelecionado" (change)="carregarRegistros()">
 
-    <option value="arrojado">
-      Arrojado - até 85% das entradas
-    </option>
+      <option value="conservador">
+        Conservador - até 50% das entradas
+      </option>
 
-  </select>
+      <option value="moderado">
+        Moderado - até 70% das entradas
+      </option>
+
+      <option value="arrojado">
+        Arrojado - até 85% das entradas
+      </option>
+
+    </select>
+
+  </div>
+
 </section>
 
 <section class="cards-metas">
@@ -47,23 +55,29 @@
 
 </section>
 
-<section
-  class="resultado-card"
-  [ngClass]="{
+<section class="resultado-card" [ngClass]="{
     'status-positivo': saldoMeta > 0,
     'status-alerta': saldoMeta === 0,
     'status-negativo': saldoMeta < 0
   }">
 
   <div class="resultado-header">
+
     <div>
       <h3>Resultado da Meta</h3>
       <p>{{ mensagemStatus }}</p>
     </div>
 
     <span class="status-badge">
-      {{ saldoMeta > 0 ? 'Dentro da meta' : saldoMeta === 0 ? 'No limite' : 'Meta ultrapassada' }}
+      {{
+      saldoMeta > 0
+      ? 'Dentro da meta'
+      : saldoMeta === 0
+      ? 'No limite'
+      : 'Meta ultrapassada'
+      }}
     </span>
+
   </div>
 
   <div class="resultado-grid">
